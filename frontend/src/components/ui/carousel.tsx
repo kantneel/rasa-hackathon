@@ -32,7 +32,7 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
-function useCarousel() {
+export function useCarousel() {
   const context = React.useContext(CarouselContext)
 
   if (!context) {
@@ -86,7 +86,7 @@ const Carousel = React.forwardRef<
     }, [api])
 
     const handleKeyDown = React.useCallback(
-      (event: React.KeyboardEvent<HTMLDivElement>) => {
+      (event: React.KeyboardEvent<any>) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault()
           scrollPrev()
@@ -120,6 +120,16 @@ const Carousel = React.forwardRef<
       }
     }, [api, onSelect])
 
+    // Effect to attach and detach the event listener
+    React.useEffect(() => {
+      window.addEventListener('keydown', handleKeyDown as any)
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown as any)
+      }
+    }, [handleKeyDown])
+
+
     return (
       <CarouselContext.Provider
         value={{
@@ -136,7 +146,7 @@ const Carousel = React.forwardRef<
       >
         <div
           ref={ref}
-          onKeyDownCapture={handleKeyDown}
+          // onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
           role="region"
           aria-roledescription="carousel"
