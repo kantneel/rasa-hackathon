@@ -2,16 +2,19 @@ import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 from transformers.pipelines.audio_utils import ffmpeg_microphone_live
 import sys
+import gradio as gr
+import scipy.signal as sps
+import librosa
 
 
 def get_transcriber():
-    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    device = "mps"
     torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
     model_id = "distil-whisper/distil-medium.en"
 
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
+        model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=False, use_safetensors=True
     )
     model.to(device)
 
@@ -26,27 +29,54 @@ def get_transcriber():
         torch_dtype=torch_dtype,
         device=device,
     )
+    return transcriber
 
-def transcribe(chunk_length_s=20.0, stream_chunk_s=1.0):
-    transcriber = get_transcriber()
-    sampling_rate = transcriber.feature_extractor.sampling_rate
+def transcribe(x):
+    sampling_rate, waveform = x
+    print(waveform)
 
-    mic = ffmpeg_microphone_live(
-        sampling_rate=sampling_rate,
-        chunk_length_s=chunk_length_s,
-        stream_chunk_s=stream_chunk_s,
-    )
+    waveform = waveform / 32678.0
+
+    # convert to mono if stereo
+    if len(waveform.shape) > 1:
+        waveform = librosa.to_mono(waveform.T)
+
+    # resample to 16 kHz if necessary
+    if sampling_rate != 16000:
+        waveform = librosa.resample(waveform, orig_sr=sampling_rate, target_sr=16000)
+
+    # limit to 10 seconds
+    waveform = waveform[:16000*10]
 
     print("Start speaking...")
-    for item in transcriber(mic, generate_kwargs={"max_new_tokens": 128}):
-        sys.stdout.write("\033[K")
-        print(item["text"], end="\r")
-        if not item["partial"][0]:
-            break
+    output = transcriber(waveform, generate_kwargs={"max_new_tokens": 128}) 
 
-    return item["text"]
+    return output
 
-transcribe()
+#transcribe()
+input_audio = gr.Audio(
+    sources = ["microphone"],
+    waveform_options=gr.WaveformOptions(
+        waveform_color="#01C6FF",
+        waveform_progress_color="#0066B4",
+        skip_length=2,
+        show_controls=False,
+    ),
+)
+
+transcriber = get_transcriber()
+sampling_rate = transcriber.feature_extractor.sampling_rate
+print('Sampling Rate:',  sampling_rate)
+demo = gr.Interface(
+    fn=transcribe,
+    inputs=input_audio,
+    outputs="text",
+    cache_examples=False,
+    live=True
+)
+
+if __name__ == "__main__":
+    demo.launch()
 
 
 """
