@@ -11,13 +11,31 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
+import { Slide } from './Slide'
 
-const colors = [
-  'bg-red-100',
-  'bg-blue-100',
-  'bg-green-100',
-  'bg-yellow-100',
-  'bg-pink-100',
+
+const markdownSlides = [
+  `# Slide 1
+  This is some text
+  This is an image:
+  ![image](https://images.unsplash.com/photo-1682685797277-f2bf89b24017?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+  ## This is a subheading
+  - This is a list
+  - This is a list
+  - This is a list
+  ### This is a subsubheading
+  1. This is an ordered list
+  2. This is an ordered list  
+  `,
+  `# Slide 2
+  This is some text
+  `,
+  `# Slide 3
+  This is some text
+  `,
+  `# Slide 4
+  This is some text
+  `,
 ]
 
 export function Slides() {
@@ -42,16 +60,12 @@ export function Slides() {
     <div>
       <Carousel
         setApi={setApi}
-        className="w-screen"
+        className="w-screen h-screen overflow-hidden"
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {markdownSlides.map((markdown, index) => (
             <CarouselItem key={index} className="basis-auto">
-              <Card className="w-screen h-screen">
-                <CardContent className={cn("flex aspect-square items-center justify-center p-6", colors[index])}>
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
+              <Slide markdown={markdown} index={index} />
             </CarouselItem>
           ))}
         </CarouselContent>
