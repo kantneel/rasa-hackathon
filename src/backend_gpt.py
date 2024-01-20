@@ -1,5 +1,7 @@
+import os
 import openai
-openai.api_key = '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'
+
+openai.api_key = os.environ["OPENAI_KEY"]
 
 def query_gpt4(system_prompt, prompt):
     response = openai.ChatCompletion.create(
