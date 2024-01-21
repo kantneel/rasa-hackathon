@@ -2,19 +2,6 @@
 ## Logo
 <img src="https://github.com/zrannie/rasa/blob/main/logo.png?raw=true" alt="Logo" width=512 height=512>
 
-## Table of contents
-
-- [Problem Statement](#problem-statement)
-- [Industry Trend and Market Competitor Analysis](#industry-trend-and-market-competitor-analysis)
-- [Company Introduction](#company-introduction)
-- [Founding Story](#founding-story)
-- [Product Walkthrough](#product-walkthrough)
-- [Technical Solution](#technical-solution)
-- [Customer Growth Statistics](#customer-growth-statistics)
-- [Customer Success Stories](#customer-success-stories)
-- [Our Team](#our-team)
-- [Contact Method](#contact-method)
-
 ## Problem Statement
 In the realm of presentations, speakers often face the challenge of managing their slides while maintaining engagement with their audience. Traditional presentation methods require physical interaction with the computer, disrupting the flow and visual continuity of the presentation. Rasa addresses these issues by offering a hands-free, voice-controlled presentation experience.
 
@@ -68,3 +55,14 @@ For inquiries, support, or feedback:
 ---
 
 *Note: The statistics and content above are creatively generated for this example and do not represent actual data.*
+
+
+## Appendix
+
+<img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTExL3Jhd3BpeGVsb2ZmaWNlMThfcGhvdG9fb2ZfaGFwcHlfc21pbGluZ19kYW5jaW5nX2dvbGRlbl9yZXRpdmVyX18zOGQxYzc0Mi1hZmZhLTQzOTItOTYxYi1iNjE4NGFkMjdlYmNfMS5wbmc.png" alt="dogs">
+
+<img src="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png" alt="cats">
+
+<img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA1L3JtNjQ4LTA5MC5wbmc.png" alt="microphone">
+
+<img src="https://image.similarpng.com/very-thumbnail/2021/01/Colorful-confetti-for-festive-celebrations-on-transparent-background-PNG.png" alt="confetti">
