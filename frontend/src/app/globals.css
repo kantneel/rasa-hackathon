@@ -105,7 +105,7 @@
   }
 
   img {
-    @apply rounded-lg max-w-2xl;
+    @apply rounded-lg max-w-2xl max-h-96;
   }
 
   ul {

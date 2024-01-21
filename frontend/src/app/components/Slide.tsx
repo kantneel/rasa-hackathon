@@ -17,7 +17,7 @@ const colors = [
 export function Slide({ slide, index }: { slide: Slide, index: number }) {
   return <div className={cn("py-24 px-32 h-screen w-screen overflow-auto flex")} style={{ background: 'rgb(246,248,245)' }}>
     <Markdown className={cn(`slide h-full w-full text-left prose overflow-auto`)}>{slide.markdown}</Markdown>
-    {slide.image && <Image className="object-contain pr-20" src={slide.image} alt='image' width={800} height={800} objectFit='contain' />}
+    {slide.image && <img className="object-contain pr-20 rounded-lg" src={slide.image} alt='image' width={800} height={800} />}
   </div>
 
 }

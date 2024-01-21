@@ -99,11 +99,7 @@ export function Slides() {
         { markdown: '# New slide' },
         ...slides.slice(current)
       ])
-      api.reInit()
       setCount(count + 1)
-      console.log({ count })
-      // api.destroy()
-      // api.internalEngine().
     })
 
     channel.bind(UPDATE_SLIDE, (data: UpdateSlidePayload) => {
@@ -118,7 +114,7 @@ export function Slides() {
     })
 
     channel.bind(CHOOSE_SLIDE, (data: ChooseSlidePayload) => {
-      setCurrent(data.index)
+      api.scrollTo(data.index)
     })
 
     channel.bind(SET_IMAGE, (data: SetImagePayload) => {
