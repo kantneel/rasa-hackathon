@@ -12,13 +12,20 @@ import {
 import { Slide } from './Slide'
 import Pusher from 'pusher-js'
 
+export type Slide = {
+  markdown: string
+  image?: string
+}
 
-const markdownSlides = [
-  `# Rasa
+const markdownSlides: Slide[] = [
+  {
+    markdown: `# Rasa
+  ![rasa](/rasa.png)
   ## The Voice Presentation Tool
   ---
-  At UI AGI House Hackathon Jan 20, 2024
+  *At UI AGI House Hackathon Jan 20, 2024*
   `,
+  }
 ]
 
 const ADD_SLIDE = 'add_slide'
@@ -45,6 +52,7 @@ export function Slides() {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
+  const [slides, setSlides] = React.useState(markdownSlides)
 
   React.useEffect(() => {
     if (!api) {
@@ -66,22 +74,33 @@ export function Slides() {
 
     const channel = pusher.subscribe('rasa');
 
-    channel.bind(ADD_SLIDE, (data: any) => {
+    channel.bind(ADD_SLIDE, (data: AddSlidePayload) => {
       console.log('add slide', data)
+      setSlides([...slides, { markdown: '# New Slide' }])
     })
 
-    channel.bind(UPDATE_SLIDE, (data: any) => {
+    channel.bind(UPDATE_SLIDE, (data: UpdateSlidePayload) => {
       console.log('make slide', data)
+      // update current slide based on current
+      setSlides([
+        ...slides.slice(0, current - 1),
+        { markdown: data.markdown },
+        ...slides.slice(current)
+      ])
     })
 
-    channel.bind(CHOOSE_SLIDE, (data: any) => {
-      console.log('choose slide', data)
+    channel.bind(CHOOSE_SLIDE, (data: ChooseSlidePayload) => {
+      setCurrent(data.index + 1)
     })
 
-    channel.bind(SET_IMAGE, (data: any) => {
-      console.log('set image', data)
+    channel.bind(SET_IMAGE, (data: SetImagePayload) => {
+      // update current slide based on current
+      setSlides([
+        ...slides.slice(0, current - 1),
+        { markdown: slides[current - 1].markdown, image: data.image_url },
+        ...slides.slice(current)
+      ])
     })
-
 
     return () => {
       channel.unbind(ADD_SLIDE)
@@ -90,7 +109,7 @@ export function Slides() {
       channel.unbind(SET_IMAGE)
       pusher.unsubscribe('rasa')
     }
-  }, [])
+  }, [current, slides])
 
 
   return (
@@ -100,9 +119,9 @@ export function Slides() {
         className="w-screen h-screen overflow-hidden"
       >
         <CarouselContent>
-          {markdownSlides.map((markdown, index) => (
+          {markdownSlides.map((slide, index) => (
             <CarouselItem key={index} className="basis-auto">
-              <Slide markdown={markdown} index={index} />
+              <Slide slide={slide} index={index} />
             </CarouselItem>
           ))}
         </CarouselContent>

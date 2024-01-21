@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils'
 import Markdown from 'react-markdown'
+import { Slide } from './Slides'
+import Image from 'next/image'
 
 const colors = [
   'bg-red-50',
@@ -12,6 +14,11 @@ const colors = [
   'bg-gray-50',
 ]
 
-export function Slide({ markdown, index }: { markdown: string, index: number }) {
-  return <Markdown className={cn(`slide h-screen w-screen text-left p-24 prose overflow-auto`, colors[index])}>{markdown}</Markdown>
+export function Slide({ slide, index }: { slide: Slide, index: number }) {
+  return <div className={cn("py-24 px-32 h-screen w-screen overflow-auto flex")} style={{ background: 'rgb(246,248,245)' }}>
+    <Markdown className={cn(`slide h-screen w-screen text-left prose overflow-auto`)}>{slide.markdown}</Markdown>
+    {slide.image && <Image className="object-contain pr-20" src={slide.image} alt='image' width={800} height={800} objectFit='contain' />}
+  </div>
+
 }
+
