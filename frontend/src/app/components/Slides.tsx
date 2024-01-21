@@ -103,10 +103,8 @@ export function Slides() {
         { markdown: '# New slide' },
         ...slides.slice(current)
       ])
+      // api.scrollTo(count)
       setCount(count + 1)
-      setTimeout(() => {
-        api.scrollTo(current + 1)
-      }, 100)
     })
 
     channel.bind(UPDATE_SLIDE, (data: UpdateSlidePayload) => {
@@ -121,6 +119,7 @@ export function Slides() {
     })
 
     channel.bind(CHOOSE_SLIDE, (data: ChooseSlidePayload) => {
+      console.log(`choose slide ${data.index}`)
       api.scrollTo(data.index)
     })
 

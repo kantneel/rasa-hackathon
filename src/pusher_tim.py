@@ -1,3 +1,4 @@
+from time import sleep
 import pusher
 import os
 from dotenv import load_dotenv
@@ -35,6 +36,7 @@ def set_image(image_url):
 
 def main():
     add_slide()
+    # sleep(1)
     # choose_slide(1)
     # update_slide("# Hello World")
     # set_image(

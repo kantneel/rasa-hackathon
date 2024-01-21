@@ -78,6 +78,7 @@
 .slide {
   img {
     @apply rounded-lg max-w-2xl max-h-96;
+    /* display: none; */
   }
   /* h1 {
     @apply text-6xl font-bold mb-6 mt-12;
