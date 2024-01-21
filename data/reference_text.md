@@ -1,6 +1,6 @@
 # Rasa Company Wiki
 ## Logo
-<img src="https://github.com/zrannie/rasa/blob/main/logo.png" alt="Logo" width=512 height=512>
+<img src="https://github.com/zrannie/rasa/blob/main/logo.png?raw=true" alt="Logo" width=512 height=512>
 
 ## Table of contents
 
@@ -47,7 +47,7 @@ Rasa's technical architecture is designed for scalability and efficiency. The la
 ## Our Team
 Rasa is developed and maintained by a diverse team of engineers, designers, and marketers who are passionate about revolutionizing the presentation experience. The team's expertise spans across software development, AI, and user experience design.
 - Team photo
-<img src="https://github.com/zrannie/rasa/blob/main/teamphoto.png" alt="teamphoto" width=512 height=512>
+<img src="https://github.com/zrannie/rasa/blob/main/teamphoto.png?raw=true" alt="teamphoto" width=512 height=512>
 
 - Kyle Kranen. Kyle Kranen is an exceptional trailblazer in the field of AI, currently leading as a Senior Research Scientist at NVIDIA, where he's pioneering the development of foundation models in AI. An alumnus of UC Berkeley, his remarkable journey from an undergraduate researcher to a leader in AI innovation exemplifies his dedication to pushing the boundaries of deep learning and AI technology.
 
