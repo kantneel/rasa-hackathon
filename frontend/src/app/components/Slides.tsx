@@ -25,7 +25,7 @@ const markdownSlides: Slide[] = [
   ---
   *At [UI AGI House Hackathon Jan 20, 2024](https://partiful.com/e/1antxX3cgLArJFGRNKg4)*
   `,
-    // image: '/rasa.png'
+    // image: 'https://github.com/zrannie/rasa/blob/main/teamphoto.png?raw=true'
   },
   // {
   //   markdown: `# Problem Statement\n\nIn the realm of presentations, speakers often face the challenge of managing their slides while maintaining engagement with their audience. Traditional presentation methods require physical interaction with the computer, disrupting the flow and visual continuity of the presentation. Rasa addresses these issues by offering a hands-free, voice-controlled presentation experience.`

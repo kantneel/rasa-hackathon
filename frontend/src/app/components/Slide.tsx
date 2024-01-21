@@ -15,9 +15,9 @@ const colors = [
 ]
 
 export function Slide({ slide, index }: { slide: Slide, index: number }) {
-  return <div className={cn("py-24 px-32 h-screen w-screen overflow-auto flex")} style={{ background: 'rgb(246,248,245)' }}>
+  return <div className={cn("py-24 px-32 h-screen w-screen overflow-auto flex items-center")} style={{ background: 'rgb(246,248,245)' }}>
     <Markdown className={cn(`slide h-full w-full text-left prose prose-2xl overflow-auto`)}>{slide.markdown}</Markdown>
-    {slide.image && <img className="object-contain pr-20 rounded-lg w-1/3" src={slide.image} alt='image' width={800} height={800} />}
+    {slide.image && <img className="object-center pr-20 rounded-lg w-1/2 ml-4" src={slide.image} alt='image' width={800} height={400} />}
   </div>
 
 }
