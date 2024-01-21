@@ -27,3 +27,12 @@ Let's have fun
 - Add an image of a dog
 
 Yeah it's been a blast
+
+## story-telling
+
+- 3 components:
+  - frontend: markdown slides framework
+  - retriever, images and text based on markdown
+  - scraper for markdown content
+  - speech
+  - gpt-4 tools + markdown generation
