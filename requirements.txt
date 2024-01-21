@@ -4,10 +4,8 @@ openai
 accelerate
 scipy
 librosa
-<<<<<<< Updated upstream
 pusher
 python-dotenv
-=======
 openpipe
 gradio
->>>>>>> Stashed changes
+elevenlabs

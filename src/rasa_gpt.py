@@ -1,7 +1,7 @@
 import json
 import os
 from dataclasses import dataclass
-from rasa_tools import choose_tool, generate_markdown, get_image
+from rasa_tools import choose_tool, generate_markdown, get_image, generate_feedback
 from pusher_demo import add_slide, choose_slide, update_slide, set_image
 import openai
 
@@ -58,15 +58,11 @@ Now, create a JSON query output for the following user utterance, inferring the 
 
 
 GET_MARKDOWN_PROMPT = """\
-
-
 An example would be:
 
 ```markdown
 # Slide 1
   This is some text
-  This is an image:
-  ![image](https://images.unsplash.com/photo-1682685797277-f2bf89b24017?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
   ## This is a subheading
   - This is a list
   - This is a list
@@ -75,7 +71,6 @@ An example would be:
   1. This is an ordered list
   2. This is an ordered list
 ```
-
 """
 
 
@@ -134,23 +129,26 @@ class RasaGPT:
                 return {"response": "Added new slide"}
             case 'update_markdown_slide':
                 print("Making a markdown slide", function.arguments)
-                args = eval(function.arguments)
-                if args["provide_image"]:
+                args = json.loads(function.arguments)
+                if "provide_image" in args and args["provide_image"]:
                     image_url = get_image(query)
                     set_image(image_url)
-                    return {"response": image_url}
+                    return {"response": "Added the image"}
                 else:
                     response = generate_markdown(query)
                     update_slide(response)
-                return {"response": response}
+                return {"response": f"Added the following response {response}"}
             case 'choose_slide':
                 print("Choosing a slide", function.arguments)
-                self.current_slide = int(eval(function.arguments)["index"])
+                self.current_slide = int(json.loads(function.arguments)["index"])
                 choose_slide(self.current_slide)
                 return {'response': f"Focus moved to slide: {self.current_slide}"}
             case _:
                 print("Unknown function", function.arguments)
                 return {"responsde": "Error Unknown Function"}
+    
+    def generate_feedback(self, output):
+        return generate_feedback(output)
         
     def get_current_slide(self):
         # Ideally this should come from pusher

@@ -1,5 +1,7 @@
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
+from elevenlabs import generate, play
+import os
 import librosa
 
 
@@ -46,7 +48,16 @@ def transcribe_and_process(x, transcriber=None, rasa=None):
 
     print("Start speaking...")
     input_text = transcriber(waveform, generate_kwargs={"max_new_tokens": 128}) 
+    print(input_text)
+    print("---------------------------------------")
+    output = rasa.process(query=input_text["text"])
+    # feedback = rasa.generate_feedback(output)
+    # audio = generate(
+    #     text=feedback,
+    #     voice="Bella",
+    #     model="eleven_monolingual_v1"
+    # )
 
-    output = rasa.process(query=input_text)
-    return " ".join([input_text, output])
+    # play(audio)
+    return " ".join([input_text["text"], output["response"]])
 
