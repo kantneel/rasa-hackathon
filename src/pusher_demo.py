@@ -13,6 +13,11 @@ pusher_client = pusher.Pusher(
 )
 
 
+def get_current_slide():
+    """Get pointer to current slide"""
+    return 0
+
+
 def add_slide():
     """Add a new slide."""
     pusher_client.trigger('rasa', 'add_slide', {})
