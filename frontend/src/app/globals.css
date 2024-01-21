@@ -76,7 +76,10 @@
 }
 
 .slide {
-  h1 {
+  img {
+    @apply rounded-lg max-w-2xl max-h-96;
+  }
+  /* h1 {
     @apply text-6xl font-bold mb-6 mt-12;
   }
 
@@ -104,9 +107,6 @@
     @apply transition-all duration-300 mt-4;
   }
 
-  img {
-    @apply rounded-lg max-w-2xl max-h-96;
-  }
 
   ul {
     @apply list-disc list-inside;
@@ -118,5 +118,5 @@
 
   li {
     @apply text-xl mt-2;
-  }
+  } */
 }

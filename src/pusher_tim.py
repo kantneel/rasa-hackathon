@@ -34,11 +34,11 @@ def set_image(image_url):
 
 
 def main():
-    # add_slide()
+    add_slide()
     # choose_slide(1)
     # update_slide("# Hello World")
-    set_image(
-        "https://images.unsplash.com/photo-1682686581556-a3f0ee0ed556?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    # set_image(
+    #     "https://images.unsplash.com/photo-1682686581556-a3f0ee0ed556?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
 
 
 main()

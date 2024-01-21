@@ -21,11 +21,15 @@ const markdownSlides: Slide[] = [
   {
     markdown: `# Rasa
   ![rasa](/rasa.png)
-  ## The Voice Presentation Tool
+  ### The Voice Presentation Tool
   ---
-  *At UI AGI House Hackathon Jan 20, 2024*
+  *At [UI AGI House Hackathon Jan 20, 2024](https://partiful.com/e/1antxX3cgLArJFGRNKg4)*
   `,
+    // image: '/rasa.png'
   },
+  // {
+  //   markdown: `# Problem Statement\n\nIn the realm of presentations, speakers often face the challenge of managing their slides while maintaining engagement with their audience. Traditional presentation methods require physical interaction with the computer, disrupting the flow and visual continuity of the presentation. Rasa addresses these issues by offering a hands-free, voice-controlled presentation experience.`
+  // }
   // {
   //   markdown: `# Empty Slide
   // `,
@@ -100,6 +104,9 @@ export function Slides() {
         ...slides.slice(current)
       ])
       setCount(count + 1)
+      setTimeout(() => {
+        api.scrollTo(current + 1)
+      }, 100)
     })
 
     channel.bind(UPDATE_SLIDE, (data: UpdateSlidePayload) => {
