@@ -25,7 +25,19 @@ const markdownSlides: Slide[] = [
   ---
   *At UI AGI House Hackathon Jan 20, 2024*
   `,
-  }
+  },
+  // {
+  //   markdown: `# Empty Slide
+  // `,
+  // },
+  // {
+  //   markdown: `# Rasa 2
+  // ![rasa](/rasa.png)
+  // ## The Voice Presentation Tool
+  // ---
+  // *At UI AGI House Hackathon Jan 20, 2024*
+  // `,
+  // }
 ]
 
 const ADD_SLIDE = 'add_slide'
@@ -51,7 +63,7 @@ type SetImagePayload = {
 export function Slides() {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
-  const [count, setCount] = React.useState(0)
+  const [count, setCount] = React.useState(1)
   const [slides, setSlides] = React.useState(markdownSlides)
 
   React.useEffect(() => {
@@ -68,6 +80,11 @@ export function Slides() {
   }, [api])
 
   React.useEffect(() => {
+    if (!api) {
+      return
+    }
+
+
     const pusher = new Pusher('1e429e2648755b45004d', {
       cluster: 'us3'
     })
@@ -76,7 +93,17 @@ export function Slides() {
 
     channel.bind(ADD_SLIDE, (data: AddSlidePayload) => {
       console.log('add slide', data)
-      setSlides([...slides, { markdown: '# New Slide' }])
+      // insert slide after current slide
+      setSlides([
+        ...slides.slice(0, current),
+        { markdown: '# New slide' },
+        ...slides.slice(current)
+      ])
+      api.reInit()
+      setCount(count + 1)
+      console.log({ count })
+      // api.destroy()
+      // api.internalEngine().
     })
 
     channel.bind(UPDATE_SLIDE, (data: UpdateSlidePayload) => {
@@ -87,10 +114,11 @@ export function Slides() {
         { markdown: data.markdown },
         ...slides.slice(current)
       ])
+      api.reInit()
     })
 
     channel.bind(CHOOSE_SLIDE, (data: ChooseSlidePayload) => {
-      setCurrent(data.index + 1)
+      setCurrent(data.index)
     })
 
     channel.bind(SET_IMAGE, (data: SetImagePayload) => {
@@ -109,17 +137,17 @@ export function Slides() {
       channel.unbind(SET_IMAGE)
       pusher.unsubscribe('rasa')
     }
-  }, [current, slides])
-
+  }, [current, slides, api, count])
 
   return (
     <div>
       <Carousel
         setApi={setApi}
         className="w-screen h-screen overflow-hidden"
+        key={`${count}-slides`}
       >
         <CarouselContent>
-          {markdownSlides.map((slide, index) => (
+          {slides.map((slide, index) => (
             <CarouselItem key={index} className="basis-auto">
               <Slide slide={slide} index={index} />
             </CarouselItem>

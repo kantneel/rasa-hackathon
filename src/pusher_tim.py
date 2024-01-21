@@ -35,9 +35,9 @@ def set_image(image_url):
 
 def main():
     add_slide()
-    choose_slide(0)
-    update_slide("Hello World")
-    set_image("https://i.imgur.com/nGF1K8f.jpg")
+    choose_slide(1)
+    # update_slide("Hello World")
+    # set_image("https://i.imgur.com/nGF1K8f.jpg")
 
 
 main()
