@@ -4,3 +4,5 @@ openai
 accelerate
 scipy
 librosa
+pusher
+python-dotenv

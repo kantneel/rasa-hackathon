@@ -96,6 +96,10 @@
     @apply text-xl mt-8;
   }
 
+  hr {
+    @apply my-16;
+  }
+
   * {
     @apply transition-all duration-300 mt-4;
   }

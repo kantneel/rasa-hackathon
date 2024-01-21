@@ -1,7 +1,6 @@
 'use client'
 import * as React from 'react'
 
-import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel,
   CarouselContent,
@@ -10,33 +9,37 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from '@/components/ui/carousel'
-import { cn } from '@/lib/utils'
 import { Slide } from './Slide'
+import Pusher from 'pusher-js'
 
 
 const markdownSlides = [
-  `# Slide 1
-  This is some text
-  This is an image:
-  ![image](https://images.unsplash.com/photo-1682685797277-f2bf89b24017?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
-  ## This is a subheading
-  - This is a list
-  - This is a list
-  - This is a list
-  ### This is a subsubheading
-  1. This is an ordered list
-  2. This is an ordered list  
-  `,
-  `# Slide 2
-  This is some text
-  `,
-  `# Slide 3
-  This is some text
-  `,
-  `# Slide 4
-  This is some text
+  `# Rasa
+  ## The Voice Presentation Tool
+  ---
+  At UI AGI House Hackathon Jan 20, 2024
   `,
 ]
+
+const ADD_SLIDE = 'add_slide'
+const CHOOSE_SLIDE = 'choose_slide'
+const UPDATE_SLIDE = 'update_slide'
+const SET_IMAGE = 'set_image'
+
+type AddSlidePayload = {
+}
+
+type ChooseSlidePayload = {
+  index: number
+}
+
+type UpdateSlidePayload = {
+  markdown: string
+}
+
+type SetImagePayload = {
+  image_url: string
+}
 
 export function Slides() {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -55,6 +58,39 @@ export function Slides() {
       setCurrent(api.selectedScrollSnap() + 1)
     })
   }, [api])
+
+  React.useEffect(() => {
+    const pusher = new Pusher('1e429e2648755b45004d', {
+      cluster: 'us3'
+    })
+
+    const channel = pusher.subscribe('rasa');
+
+    channel.bind(ADD_SLIDE, (data: any) => {
+      console.log('add slide', data)
+    })
+
+    channel.bind(UPDATE_SLIDE, (data: any) => {
+      console.log('make slide', data)
+    })
+
+    channel.bind(CHOOSE_SLIDE, (data: any) => {
+      console.log('choose slide', data)
+    })
+
+    channel.bind(SET_IMAGE, (data: any) => {
+      console.log('set image', data)
+    })
+
+
+    return () => {
+      channel.unbind(ADD_SLIDE)
+      channel.unbind(UPDATE_SLIDE)
+      channel.unbind(CHOOSE_SLIDE)
+      channel.unbind(SET_IMAGE)
+      pusher.unsubscribe('rasa')
+    }
+  }, [])
 
 
   return (
