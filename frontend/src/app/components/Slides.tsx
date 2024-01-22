@@ -103,7 +103,7 @@ export function Slides() {
         { markdown: '# New slide' },
         ...slides.slice(current)
       ])
-      // api.scrollTo(count)
+      api.scrollTo(count)
       setCount(count + 1)
     })
 
@@ -146,7 +146,6 @@ export function Slides() {
       <Carousel
         setApi={setApi}
         className="w-screen h-screen overflow-hidden"
-        key={`${count}-slides`}
       >
         <CarouselContent>
           {slides.map((slide, index) => (
